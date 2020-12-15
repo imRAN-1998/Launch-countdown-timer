@@ -648,25 +648,63 @@ function onInit(){
       document.querySelector('.days2').classList.remove('animation');
       document.querySelector('.days3').classList.remove('animation');
     }
+    let str_temp_sec;
+    if(temp_sec <= 9){
+      temp_sec = "0" + temp_sec;
+    }
+    if(seconds_value <= 9){
+      str_temp_sec="0" + seconds_value;
+    }else{
+      str_temp_sec = seconds_value;
+    }
+    let str_temp_min;
+    if(temp_min <=9){
+      temp_min = "0" + temp_min;
+    }
+    if(min_value <= 9){
+      str_temp_min="0" + min_value;
+    }else{
+      str_temp_min = min_value;
+    }
+
+    let str_temp_hrs;
+    if(temp_hours <=9){
+      temp_hours = "0" + temp_hours;
+    }
+    if(hours_value <= 9){
+      str_temp_hrs="0" + hours_value;
+    }else{
+      str_temp_hrs = hours_value;
+    }
+
+    let str_temp_days;
+    if(temp_days <=9){
+      temp_days = "0" + temp_days;
+    }
+    if(days_value <= 9){
+      str_temp_days="0" + days_value;
+    }else{
+      str_temp_days = days_value;
+    }
 
     seconds0.textContent = temp_sec;
-    seconds1.textContent = seconds_value;
-    seconds2.textContent = seconds_value;
+    seconds1.textContent = str_temp_sec;
+    seconds2.textContent = str_temp_sec;
     seconds3.textContent = temp_sec;
 
     minutes0.textContent = temp_min;
-    minutes1.textContent = min_value;
-    minutes2.textContent = min_value;
+    minutes1.textContent = str_temp_min;
+    minutes2.textContent = str_temp_min;
     minutes3.textContent = temp_min;
 
     hours0.textContent = temp_hours;
-    hours1.textContent = hours_value;
-    hours2.textContent = hours_value;
+    hours1.textContent = str_temp_hrs;
+    hours2.textContent = str_temp_hrs;
     hours3.textContent = temp_hours;
 
     days0.textContent = temp_days;
-    days1.textContent = days_value;
-    days2.textContent = days_value;
+    days1.textContent = str_temp_days;
+    days2.textContent = str_temp_days;
     days3.textContent = temp_days;
 
     
