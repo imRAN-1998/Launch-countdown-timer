@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;700&display=swap" rel="stylesheet">
+  <title>Frontend Mentor | Launch countdown timer by imran</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    *{
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
+}
+.container{
+  position: relative;
+  width:100%;
+  height: 100vh;
+  font-family: 'Red Hat Text', sans-serif;
+  font-weight:600;
+  background: linear-gradient(to bottom,hsl(234, 17%, 12%),hsl(235, 16%, 14%));
+}
+.heading{
+  position: absolute;
+  font-size:25px;
+  letter-spacing: 5px;
+  top:13%;
+  left:50%;
+  width:100%;
+  transform: translate(-50%,-50%);
+  color:hsl(0, 0%, 100%);
+  display: flex;
+  justify-content: center;
+}
+.box-center{
+  position: absolute;
+  top:35%;
+  left:50%;
+  width:50%;
+  z-index: 50;
+  transform: translate(-50%,-50%);
+}
+.count-down{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.labels{
+  position: absolute;
+  z-index: 20;
+  width:100%;
+  top:115px;
+}
+.labels div{
+  letter-spacing: 6px;
+  width:22%;
+  display: flex;
+  justify-content: center;
+  color:hsl(0, 0%, 100%);
+  opacity: 0.4;
+  font-size: 14px;
+  font-weight: 100px;
+}
+.labels div:nth-child(1){
+  position: absolute;
+  left:0;
+}
+.labels div:nth-child(2){
+  position: absolute;
+  left:26%;
+}
+.labels div:nth-child(3){
+  position: absolute;
+  left:52%;
+}
+.labels div:nth-child(4){
+  position: absolute;
+  left:78%;
+}
+.days,.hours,.minutes,.seconds{
+  width:22%;
+  /*border:1px solid black;*/
+  height:180px;
+  font-size:80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+
+}
+.days{
+  top:0%;
+  left:0;
+  transform: translateY(-50%);
+  perspective: 500px;
+}
+.days::before,.minutes::before,.hours::before,.seconds::before{
+  content: "";
+  position: absolute;
+  z-index: 30;
+  width:90%;
+  border:0.5px solid rgba(0,0,0,0.1);
+}
+.seconds span.span1::before,.minutes span.span1::before,.hours span.span1::before,.days span.span1::before{
+  content: "";
+  position: absolute;
+  z-index: 40;
+  padding:6px;
+  border-radius: 50%;
+  left:-5px;
+  transform: translateY(-50%);
+  background: hsl(234, 17%, 12%);
+}
+.seconds span.span1::after,.minutes span.span1::after,.hours span.span1::after,.days span.span1::after{
+  content: "";
+  position: absolute;
+  z-index: 40;
+  padding:6px;
+  border-radius: 50%;
+  right:-5px;
+  transform: translateY(-50%);
+  background: hsl(234, 17%, 12%);
+}
+
+.hours{
+  top:0;
+  left:26%;
+  transform: translateY(-50%);
+  perspective: 500px;
+}
+.minutes{
+  top:0;
+  transform: translateY(-50%);
+  left:52%;
+  perspective: 500px;
+}
+.seconds{
+  top:0;
+  transform: translateY(-50%);
+  left:78%;
+  perspective: 500px;
+}
+
+.days1,.hours1,.minutes1,.seconds1{
+  position: absolute;
+  bottom: 0;
+  color:#FB5E84;
+  height:90px;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  /*background:hsl(236, 20%, 32%);*/
+  background:linear-gradient(to top,hsl(236, 21%, 26%),hsl(236, 19%, 30%));
+  /*background: hsl(236, 21%, 26%);*/
+  box-shadow: 0px 10px 4px hsl(234, 21%, 9%);
+
+}
+.days1 span,.hours1 span,.minutes1 span,.seconds1 span{
+  position: absolute;
+  bottom:37px;
+  left:50%;
+  transform: translateX(-50%);
+}
+.days2,.hours2,.minutes2,.seconds2{
+  top:0;
+  position: absolute;
+  color:#FB5E84;
+  width:100%;
+  height: 90px;
+  overflow: hidden;
+  border-radius: 10px;
+  transform: rotate(0deg);
+  /*animation: anime 1s ease forwards;*/
+  transform-style: preserve-3d;
+  transform-origin: bottom;
+  backface-visibility:hidden;
+  /*background:hsl(236, 20%, 32%);*/
+  /*background:linear-gradient(to top,red,yellow);*/
+  background:linear-gradient(to bottom,hsl(236, 21%, 26%),hsl(236, 19%, 30%));
+  /*background: hsl(236, 21%, 26%);*/
+}
+.days2 span,.hours2 span,.minutes2 span,.seconds2 span{
+  position: absolute;
+  top:90px;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+@keyframes anime{
+  from {transform: rotateX(0deg);transform-origin: bottom}
+  to {transform:rotateX(-180deg)}
+}
+@keyframes anime1{
+  from {transform: rotateX(180deg);perspective: 1200px}
+  to {transform:rotateX(0deg);perspective: 100px}
+}
+.days0,.hours0,.minutes0,.seconds0{
+  top:0;
+  position: absolute;
+  color:#FB5E84;
+  width:100%;
+  height: 90px;
+  overflow: hidden;
+  border-radius: 10px;
+  transform: rotate(0deg);
+  transform-style: preserve-3d;
+  transform-origin: bottom;
+  box-shadow: 0px 1px 4px black;
+
+  background:linear-gradient(to bottom,hsl(236, 21%, 26%),hsl(236, 19%, 30%));
+  /*background: hsl(236, 21%, 26%);*/
+  /*backface-visibility:hidden;*/
+}
+.days0 span,.hours0 span,.minutes0 span,.seconds0 span{
+  position: absolute;
+  top:88px;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.days3,.hours3,.minutes3,.seconds3{
+  position: absolute;
+  top: 50%;
+  color:#FB5E84;
+  height:90px;
+  width: 100%;
+  border-radius: 10px;
+  transform: rotateX(180deg)translateX(-50%);
+  transform-style: preserve-3d;
+  transform-origin: top;
+  overflow: hidden;
+  backface-visibility:hidden;
+  /*animation: anime1 1s ease forwards;*/
+  /*background:hsl(236, 21%, 26%)*/
+  background:linear-gradient(to top,hsl(236, 21%, 26%),hsl(236, 19%, 30%));
+  /*background:linear-gradient(to top,red,yellow);*/
+  perspective-origin: bottom right;
+
+}
+.days3 span,.hours3 span,.minutes3 span,.seconds3 span{
+  position: absolute;
+  bottom:39px;
+  left:50%;
+  transform: translateX(-50%);
+}
+
+.seconds2.animation{
+  animation: anime 1s infinite ease;
+}
+.seconds3.animation{
+  animation: anime1 1s infinite ease;
+}
+.minutes2.animation,.hours2.animation, .days2.animation{
+  animation: anime 1s ease forwards;
+}
+.minutes3.animation,.hours3.animation, .days3.animation{
+  animation: anime1 1s ease forwards;
+}
+
+.small-mountain1{
+  clip-path: polygon(0% 100%, 0% 88%, 25% 81%, 34% 86%, 38% 83%, 63% 79%, 76% 86%, 85% 82%, 87% 85%, 99% 77%, 100% 78%, 100% 100%);
+  width:100%;
+  position: absolute;
+  bottom:0;
+  height:600px;
+  background: #2F2439;
+  display: none;
+}
+.mountain1{
+  position: absolute;
+  bottom: 0px;
+}
+
+
+.stars div{
+  z-index: 20;
+  position: absolute;
+  padding:4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+}
+.stars div:nth-child(1){
+  top:55%;
+  left:20%;
+}
+.stars div:nth-child(2){
+  top:5%;
+  left:30%;
+}
+.stars div:nth-child(3){
+  top:10%;
+  left:85%;
+}
+.stars div:nth-child(4){
+  top:30%;
+  left:80%;
+}
+.stars div:nth-child(5){
+  top:35%;
+  left:90%;
+}
+.stars div:nth-child(6){
+  top:45%;
+  left:90%;
+}
+.stars div:nth-child(7){
+  position: absolute;
+  top:65%;
+  left:75%;
+}
+.stars div:nth-child(8){
+  top:50%;
+  left:5%;
+}
+.stars div:nth-child(9){
+  top:65%;
+  left:3%;
+}
+.stars div:nth-child(10){
+  top:10%;
+  left:10%;
+}
+
+.small-stars div{
+  z-index: 20;
+  position: absolute;
+  padding:1.5px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+}
+.small-stars div:nth-child(1){
+  top:10%;
+  left:3%;
+}
+.small-stars div:nth-child(2){
+  top:15%;
+  left:3%;
+}
+.small-stars div:nth-child(3){
+  top:25%;
+  left:5%;
+}
+.small-stars div:nth-child(4){
+  position: absolute;
+  top: 27%;
+  left:15%;
+}
+.small-stars div:nth-child(5){
+  top:30%;
+  left:12%;
+}
+.small-stars div:nth-child(6){
+  top:30%;
+  left:18%;
+}
+.small-stars div:nth-child(7){
+  top:55%;
+  left:95%;
+}
+.small-stars div:nth-child(8){
+  top:50%;
+  left:90%;
+}
+.small-stars div:nth-child(9){
+  top:60%;
+  left:80%;
+}
+.small-stars div:nth-child(10){
+  position: absolute;
+  top:65%;
+  left:80%;
+}
+.small-stars div:nth-child(11){
+  top:5%;
+  left:40%;
+}
+.small-stars div:nth-child(12){
+  top:7%;
+  left:50%;
+}
+.small-stars div:nth-child(13){
+  top:8%;
+  left:42%;
+}
+.small-stars div:nth-child(14){
+  top:10%;
+  left:65%;
+}
+.small-stars div:nth-child(15){
+  top:15%;
+  left:75%;
+}
+
+
+.icons{
+  width:150px;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left:50%;
+  bottom:10%;
+  transform: translate(-50%,-50%);
+}
+
+
+@media(max-width:500px){
+  .box-center{
+    width:90%;
+    top:50%;
+  }
+  .heading{
+    letter-spacing: 4px;
+    font-size: 18px;
+  }
+  .labels div{
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+  .mountain1{
+    display: none;
+  }
+  .days,.hours,.minutes,.seconds{
+    height:100px;
+    font-size: 35px;
+  }
+  .days1,.hours1,.minutes1,.seconds1{
+  height:50px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 4px hsl(234, 21%, 9%);
+
+}
+.days1 span,.hours1 span,.minutes1 span,.seconds1 span{
+  position: absolute;
+  bottom:27px;
+  left:50%;
+  transform: translateX(-50%);
+}
+.days2,.hours2,.minutes2,.seconds2{
+  height: 50px;
+  border-radius: 5px;
+  
+}
+.days2 span,.hours2 span,.minutes2 span,.seconds2 span{
+  position: absolute;
+  top:50px;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+.days0,.hours0,.minutes0,.seconds0{
+  height: 50px;
+  border-radius: 5px;
+}
+.days0 span,.hours0 span,.minutes0 span,.seconds0 span{
+  position: absolute;
+  top:50px;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.days3,.hours3,.minutes3,.seconds3{
+  height:50px;
+  border-radius: 5px;
+
+}
+.days3 span,.hours3 span,.minutes3 span,.seconds3 span{
+  position: absolute;
+  bottom:26px;
+  left:50%;
+  transform: translateX(-50%);
+}
+.labels{
+  top:85px;
+}
+.small-mountain1{
+  display: block;
+}
+}
+
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="heading"><span>WE'RE LAUNCHING SOON</span></div>
+    <div class="box-center">
+      <div class="count-down">
+        <div class="days">
+          <span class="span1"></span>
+          <div class="days0"><span>13</span></div>
+          <div class="days1"><span>14</span></div>
+          <div class="days2"><span>14</span></div>
+          <div class="days3"><span>13</span></div>
+        </div>
+        <div class="hours">
+          <span class="span1"></span>
+          <div class="hours0"><span>23</span></div>
+          <div class="hours1"><span>00</span></div>
+          <div class="hours2"><span>00</span></div>
+          <div class="hours3"><span>23</span></div>
+        </div>
+        <div class="minutes">
+          <span class="span1"></span>
+          <div class="minutes0"><span>59</span></div>
+          <div class="minutes1"><span>00</span></div>
+          <div class="minutes2"><span>00</span></div>
+          <div class="minutes3"><span>59</span></div>
+        </div>
+        <div class="seconds">
+          <span class="span1"></span>
+          <div class="seconds0"><span>59</span></div>
+          <div class="seconds1"><span>00</span></div>
+          <div class="seconds2 animation"><span>00</span></div>
+          <div class="seconds3 animation"><span>59</span></div>
+        </div>
+      </div>
+      <div class="labels">
+        <div><span>DAYS</span></div>
+        <div><span>HOURS</span></div>
+        <div><span>MINUTES</span></div>
+        <div><span>SECONDS</span></div>
+      </div>
+    </div>
+    <div class="mountain1">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1366" height="197"><defs><path id="a" d="M0 0h1440v197H0z"/></defs><g fill="none" fill-rule="evenodd"><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><g mask="url(#b)"><path fill="#211A29" d="M1440 50.205L1088.504 0 949.669 50.205 878 25.102 556 0 398.525 50.205l-95.807-25.103-51.328 16.761L45.704 0 0 17.701V160h1440z"/><path fill="#1A1823" d="M1394.296 1l94.649 69.336 50.047-49.449zM1137.282 42.576l51.328 27.76 80.6-5.426zM884 1l157.475 83.151 80.929-26.062zM351.496 1l138.835 83.151 49.321-28.526z"/><path fill="#2F2439" d="M0 84.151L351.496 1l138.835 83.151L562 42.576 884 1l157.475 83.151 95.807-41.575 51.328 27.76L1394.296 1 1440 30.317V266H0z"/></g></g></svg>
+
+    </div>
+    <div class="small-mountain1"></div>
+    <div class="stars">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="small-stars">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="icons">
+      <i class="fa fa-facebook-official" style="font-size:30px;color:rgba(255,255,255,0.5)"></i>
+      <i class="fa fa-pinterest" style="font-size:30px;color:rgba(255,255,255,0.5)"></i>
+      <i class="fa fa-instagram" style="font-size:30px;color:rgba(255,255,255,0.5)"></i>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    let container = document.querySelector('.container');
+
+//seconds
+let seconds = container.querySelector('.seconds');
+let seconds0 = seconds.querySelector('.seconds0 span');
+let seconds1 = seconds.querySelector('.seconds1 span');
+let seconds2 = seconds.querySelector('.seconds2 span');
+let seconds3 = seconds.querySelector('.seconds3 span');
+
+//minutes
+let minutes = container.querySelector('.minutes');
+let minutes0 = minutes.querySelector('.minutes0 span');
+let minutes1 = minutes.querySelector('.minutes1 span');
+let minutes2 = minutes.querySelector('.minutes2 span');
+let minutes3 = minutes.querySelector('.minutes3 span');
+
+//hours
+let hours = container.querySelector('.hours');
+let hours0 = hours.querySelector('.hours0 span');
+let hours1 = hours.querySelector('.hours1 span');
+let hours2 = hours.querySelector('.hours2 span');
+let hours3 = hours.querySelector('.hours3 span');
+
+//days
+let days = container.querySelector('.days');
+let days0 = days.querySelector('.days0 span');
+let days1 = days.querySelector('.days1 span');
+let days2 = days.querySelector('.days2 span');
+let days3 = days.querySelector('.days3 span');
+
+
+
+let seconds_value = 59;
+let min_value = 59;
+let hours_value = 23;
+let days_value = 13;
+function onInit(){
+  loadAnime();
+  const CT = setInterval(()=>{
+    let temp_sec;
+    let temp_min;
+    let temp_hours;
+    let temp_days;
+    if(seconds_value == 0){
+      temp_sec = 59;
+    }else{
+      temp_sec = seconds_value -1;
+    }
+
+    if(min_value == 0){
+      temp_min = 59;
+    }else{
+      temp_min = min_value -1;
+    }
+
+    if(hours_value == 0){
+      temp_hours = 23;
+    }else{
+      temp_hours = hours_value -1;
+    }
+
+    if(days_value == 0){
+      temp_days = 0;
+    }else{
+      temp_days = days_value -1;
+    }
+
+    if(document.querySelector('.minutes2').classList.contains('animation')){
+      document.querySelector('.minutes2').classList.remove('animation');
+      document.querySelector('.minutes3').classList.remove('animation');
+    }
+    if(document.querySelector('.hours2').classList.contains('animation')){
+      // setTimeout(()=>{
+      document.querySelector('.hours2').classList.remove('animation');
+      document.querySelector('.hours3').classList.remove('animation');
+      // },2000)
+    }
+    if(document.querySelector('.days2').classList.contains('animation')){
+      document.querySelector('.days2').classList.remove('animation');
+      document.querySelector('.days3').classList.remove('animation');
+    }
+
+    seconds0.textContent = temp_sec;
+    seconds1.textContent = seconds_value;
+    seconds2.textContent = seconds_value;
+    seconds3.textContent = temp_sec;
+
+    minutes0.textContent = temp_min;
+    minutes1.textContent = min_value;
+    minutes2.textContent = min_value;
+    minutes3.textContent = temp_min;
+
+    hours0.textContent = temp_hours;
+    hours1.textContent = hours_value;
+    hours2.textContent = hours_value;
+    hours3.textContent = temp_hours;
+
+    days0.textContent = temp_days;
+    days1.textContent = days_value;
+    days2.textContent = days_value;
+    days3.textContent = temp_days;
+
+    
+    // console.log(days_value+" "+hours_value+" "+ min_value + " "+ seconds_value);
+    if(seconds_value == 0 && min_value == 0 && hours_value == 0 && days_value == 0){
+      console.log('timer ends!')
+      endAnime();
+      clearInterval(CT);
+      return;
+    }
+    if(seconds_value == 0){
+      seconds_value = 59;
+        document.querySelector('.minutes2').classList.add('animation');
+        document.querySelector('.minutes3').classList.add('animation');
+        console.log(document.querySelector('.minutes2'));
+      if(min_value == 0){
+        min_value = 59;
+        document.querySelector('.hours2').classList.add('animation');
+        document.querySelector('.hours3').classList.add('animation');
+        console.log(document.querySelector('.hours2'),document.querySelector('.hours3'))
+        if(hours_value == 0){
+          hours_value = 23;
+          document.querySelector('.days2').classList.add('animation');
+          document.querySelector('.days3').classList.add('animation');
+          console.log(document.querySelector('.days2'),document.querySelector('.days3'))
+          if(days_value == 0){
+            clearInterval(CT);  
+            seconds_value=0;
+            min_value=0;
+            hours_value=0;
+            days_value=0;         
+          }else{
+            days_value--;
+          }
+        }else{
+          hours_value--;
+        }
+      }else{
+        min_value--;
+      }
+    }else{
+      seconds_value--;
+    }
+  },1000)
+}
+onInit();
+function loadAnime(){
+  document.querySelector('.minutes2').classList.add('animation');
+  document.querySelector('.minutes3').classList.add('animation');
+  document.querySelector('.hours2').classList.add('animation');
+  document.querySelector('.hours3').classList.add('animation');
+  document.querySelector('.days2').classList.add('animation');
+  document.querySelector('.days3').classList.add('animation');
+  setTimeout(()=>{
+    document.querySelector('.minutes2').classList.remove('animation');
+    document.querySelector('.minutes3').classList.remove('animation');
+    document.querySelector('.hours2').classList.remove('animation');
+    document.querySelector('.hours3').classList.remove('animation');
+    document.querySelector('.days2').classList.remove('animation');
+    document.querySelector('.days3').classList.remove('animation');
+  },2000)
+}
+function endAnime(){
+  document.querySelector('.seconds2').classList.remove('animation');
+  document.querySelector('.seconds3').classList.remove('animation');
+}
+</script>
+</body>
+</html>
